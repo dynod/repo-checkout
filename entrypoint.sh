@@ -20,6 +20,11 @@ export HOME=/home/user
 repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}"
 .repo/repo/repo sync -j "${CPUs}"
 
-# Prepare setup for current branch
-export MANIFEST_BRANCHES=`basename ${GITHUB_REPOSITORY}`/`basename ${GITHUB_REF}`
+# Prepare setup for current branch (if any)
+BRANCH=`basename ${GITHUB_REF}`
+if test "${BRANCH}" != "master"; then
+    export MANIFEST_BRANCHES=`basename ${GITHUB_REPOSITORY}`/"${BRANCH}"
+fi
+
+# Use Makefile setup
 make setup-"${GROUP}"
