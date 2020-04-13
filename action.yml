@@ -1,0 +1,21 @@
+# Action to setup a workspace thanks to repo tool
+name: repo-checkout
+description: Use repo tool to checkout a workspace composed of several projects
+inputs:
+    url:
+        description: URL to repo manifest repository
+        required: true
+    manifest:
+        description: Name of the manifest file to be used
+        required: false
+        default: manifest.xml
+    group:
+        description: Name of the project group to be checked out
+        required: false
+runs:
+    using: docker
+    image: Dockerfile
+    args:
+        - ${{ inputs.url }}
+        - ${{ inputs.manifest }}
+        - ${{ inputs.group }}
