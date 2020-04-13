@@ -15,8 +15,6 @@ inputs:
 runs:
     using: docker
     image: Dockerfile
-    env:
-        HOME: /home/user
     args:
         - ${{ inputs.url }}
         - ${{ inputs.manifest }}

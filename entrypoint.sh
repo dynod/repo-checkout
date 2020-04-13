@@ -12,8 +12,9 @@ shift
 # Reckon CPUs count
 CPUs="$(grep processor /proc/cpuinfo | wc -l)"
 
-# Just make sure we can write in workspace folder
+# Just make sure we can write in workspace folder; and fix HOME setting
 sudo chmod a+w .
+export HOME=/home/user
 
 # Launch repo initialization
 repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}"
