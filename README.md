@@ -7,10 +7,10 @@ To use this action, just declare a step like this in your workflow file:
 ```yaml
 - name: My step
   uses: dynod/repo-checkout@v1
-      with:
-          url: https://github.com/user/repo
-          manifest: some-manifest.xml
-          group: some-group
+  with:
+      url: https://github.com/user/repo
+      manifest: some-manifest.xml
+      group: some-group
 ```
 
 Input parameters are:
