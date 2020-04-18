@@ -17,13 +17,17 @@ sudo chmod a+w .
 export HOME=/home/user
 
 # Launch repo initialization
-repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}"
+repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}" --depth=1
 .repo/repo/repo sync -j "${CPUs}"
 
+# Prepare some environment
+export CI=1
+export CI_PROJECT=`basename ${GITHUB_REPOSITORY}`
+export CI_BRANCH=`basename ${GITHUB_REF}`
+
 # Prepare setup for current branch (if any)
-BRANCH=`basename ${GITHUB_REF}`
-if test "${BRANCH}" != "master"; then
-    export MANIFEST_BRANCHES=`basename ${GITHUB_REPOSITORY}`/"${BRANCH}"
+if test "${CI_BRANCH}" != "master"; then
+    export MANIFEST_BRANCHES="${CI_PROJECT}"/"${CI_BRANCH}"
 fi
 
 # Use Makefile setup
