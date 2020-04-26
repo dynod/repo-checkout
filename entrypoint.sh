@@ -23,11 +23,16 @@ repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}" --depth=1
 # Prepare some environment
 export CI=1
 export CI_PROJECT=`basename ${GITHUB_REPOSITORY}`
-export CI_BRANCH=`basename ${GITHUB_REF}`
-
-# Prepare setup for current branch (if any)
-if test "${CI_BRANCH}" != "master"; then
-    export MANIFEST_BRANCHES="${CI_PROJECT}"/"${CI_BRANCH}"
+if echo "${GITHUB_REF}" | grep "refs/tags/" >/dev/null; then
+    # Prepare setup for current tag
+    export CI_TAG=`basename ${GITHUB_REF}`
+    export MANIFEST_TAGS="${CI_PROJECT}"/"${CI_TAG}"
+else
+    # Prepare setup for current branch (if not master)
+    export CI_BRANCH=`basename ${GITHUB_REF}`
+    if test "${CI_BRANCH}" != "master"; then
+        export MANIFEST_BRANCHES="${CI_PROJECT}"/"${CI_BRANCH}"
+    fi
 fi
 
 # Use Makefile setup
