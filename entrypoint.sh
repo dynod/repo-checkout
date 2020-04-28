@@ -16,8 +16,16 @@ CPUs="$(grep processor /proc/cpuinfo | wc -l)"
 sudo chmod a+w .
 export HOME=/home/user
 
+# Group options
+if test -n "${GROUP}"; then
+    REPO_GROUP_OPTIONS="-g default,${GROUP}"
+    MAKE_SETUP_TARGET="setup-${GROUP}"
+else
+    MAKE_SETUP_TARGET="setup"
+fi
+
 # Launch repo initialization
-repo init -u "${URL}" -m "${MANIFEST}" -g default,"${GROUP}" --depth=1
+repo init -u "${URL}" -m "${MANIFEST}" ${REPO_GROUP_OPTIONS} --depth=1
 .repo/repo/repo sync -j "${CPUs}"
 
 # Prepare some environment
@@ -36,4 +44,4 @@ else
 fi
 
 # Use Makefile setup
-make setup-"${GROUP}"
+make ${MAKE_SETUP_TARGET}
