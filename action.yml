@@ -14,7 +14,7 @@ inputs:
         required: false
 runs:
     using: docker
-    image: Dockerfile
+    image: dynod/repo-checkout-action:1.0.0
     args:
         - ${{ inputs.url }}
         - ${{ inputs.manifest }}

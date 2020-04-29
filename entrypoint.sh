@@ -31,15 +31,23 @@ repo init -u "${URL}" -m "${MANIFEST}" ${REPO_GROUP_OPTIONS} --depth=1
 # Prepare some environment
 export CI=1
 export CI_PROJECT=`basename ${GITHUB_REPOSITORY}`
-if echo "${GITHUB_REF}" | grep "refs/tags/" >/dev/null; then
-    # Prepare setup for current tag
-    export CI_TAG=`basename ${GITHUB_REF}`
-    export MANIFEST_TAGS="${CI_PROJECT}"/"${CI_TAG}"
+IS_TAG="$(echo "${GITHUB_REF}" | grep "refs/tags/" || true)"
+
+# Check for tag manifest
+if test "${MANIFEST%%/*}" == "tags" -a "${CI_PROJECT}" == "workspace" -a -n "${IS_TAG}"; then
+    # Deduce project from tag name; and keep manifest as is
+    CI_PROJECT="$(echo ${MANIFEST} | sed -e "s|tags/\([^/]*\)/.*|\1|")"
 else
-    # Prepare setup for current branch (if not master)
-    export CI_BRANCH=`basename ${GITHUB_REF}`
-    if test "${CI_BRANCH}" != "master"; then
-        export MANIFEST_BRANCHES="${CI_PROJECT}"/"${CI_BRANCH}"
+    if test -n "${IS_TAG}"; then
+        # Prepare setup for current tag
+        export CI_TAG=`basename ${GITHUB_REF}`
+        export MANIFEST_TAGS="${CI_PROJECT}"/"${CI_TAG}"
+    else
+        # Prepare setup for current branch (if not master)
+        export CI_BRANCH=`basename ${GITHUB_REF}`
+        if test "${CI_BRANCH}" != "master"; then
+            export MANIFEST_BRANCHES="${CI_PROJECT}"/"${CI_BRANCH}"
+        fi
     fi
 fi
 
