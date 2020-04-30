@@ -12,6 +12,9 @@ inputs:
     group:
         description: Name of the project group to be checked out
         required: false
+    env:
+        description: List (NAME=VALUE,NAME2=VALUE) of env variables to be set
+        required: false
 runs:
     using: docker
     image: docker://dynod/repo-checkout-action:1.0.0
@@ -19,3 +22,4 @@ runs:
         - ${{ inputs.url }}
         - ${{ inputs.manifest }}
         - ${{ inputs.group }}
+        - ${{ inputs.env }}

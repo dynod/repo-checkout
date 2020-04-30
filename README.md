@@ -23,3 +23,6 @@ File name of the repo manifest to be used (default: *manifest.xml*)
 
 ### group
 Project group name to be used with repo (default: empty)
+
+### env
+Comma separated list of environment variables to be set before calling make.

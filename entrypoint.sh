@@ -8,6 +8,8 @@ MANIFEST="$1"
 shift
 GROUP="$1"
 shift
+ENVVARS="$1"
+shift
 
 # Reckon CPUs count
 CPUs="$(grep processor /proc/cpuinfo | wc -l)"
@@ -50,6 +52,11 @@ else
         fi
     fi
 fi
+
+# Prepare env vars
+for VAR in $(echo ${ENVVARS} | sed -e "s|,| |g"); do
+    eval "export $VAR"
+done
 
 # Use Makefile setup
 make ${MAKE_SETUP_TARGET}
