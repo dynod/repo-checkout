@@ -36,7 +36,7 @@ IS_TAG="$(echo "${GITHUB_REF}" | grep "refs/tags/" || true)"
 # Check for tag manifest
 if test "${MANIFEST%%/*}" == "tags" -a "${CI_PROJECT}" == "workspace" -a -n "${IS_TAG}"; then
     # Deduce project from tag name; and keep manifest as is
-    CI_PROJECT="$(echo ${MANIFEST} | sed -e "s|tags/\([^/]*\)/.*|\1|")"
+    export CI_PROJECT="$(echo ${MANIFEST} | sed -e "s|tags/\([^/]*\)/.*|\1|")"
 else
     if test -n "${IS_TAG}"; then
         # Prepare setup for current tag
