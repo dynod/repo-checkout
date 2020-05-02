@@ -21,6 +21,9 @@ URL to repository holding the repo manifest
 ### manifest
 File name of the repo manifest to be used (default: *manifest.xml*)
 
+### branch
+Branch to use on the manifest repository (default: *master*)
+
 ### group
 Project group name to be used with repo (default: empty)
 

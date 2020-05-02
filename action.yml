@@ -9,6 +9,9 @@ inputs:
         description: Name of the manifest file to be used
         required: false
         default: manifest.xml
+    branch:
+        description: Branch to use on the manifest repository
+        required: false
     group:
         description: Name of the project group to be checked out
         required: false
@@ -21,5 +24,6 @@ runs:
     args:
         - ${{ inputs.url }}
         - ${{ inputs.manifest }}
+        - ${{ inputs.branch }}
         - ${{ inputs.group }}
         - ${{ inputs.env }}
