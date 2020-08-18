@@ -1,5 +1,5 @@
 # Dockerfile action for repo-checkout
-FROM dynod/devenv:1.1.0
+FROM dynod/devenv:1.2.0
 
 COPY entrypoint.sh /
 
