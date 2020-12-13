@@ -6,7 +6,7 @@ Github action to setup a workspace using repo
 To use this action, just declare a step like this in your workflow file:
 ```yaml
 - name: My step
-  uses: dynod/repo-checkout@1.3.1
+  uses: dynod/repo-checkout@1.3.2
   with:
       url: https://github.com/user/repo
       manifest: some-manifest.xml
